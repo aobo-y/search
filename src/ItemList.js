@@ -1,21 +1,22 @@
 import React, { PureComponent } from 'react';
 import propTypes from 'prop-types';
-import { Skeleton, List, Avatar, Icon } from 'antd';
+import { Skeleton, List, Avatar } from 'antd';
 
 import './ItemList.css';
 
 class Item extends PureComponent {
   static propTypes = {
-    item: propTypes.objectOf({
+    item: propTypes.shape({
       url: propTypes.string,
       title: propTypes.string,
       subtitle: propTypes.string,
       desc: propTypes.string,
-    })
+    }),
+    onClickHandler: propTypes.func
   }
 
   render() {
-    const { item } = this.props;
+    const { item, onClickHandler } = this.props;
     const url = new URL(item.url);
 
     return (
@@ -29,7 +30,17 @@ class Item extends PureComponent {
                 {item.title[0]}
             </Avatar>
           }
-          title={<a className="title-anchor" href={item.url}>{item.title}</a>}
+          title={
+            <a
+              className="title-anchor"
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={onClickHandler}
+            >
+              {item.title}
+            </a>
+          }
           description={item.subtitle}
         />
         {item.desc}
@@ -41,7 +52,8 @@ class Item extends PureComponent {
 class ItemList extends PureComponent {
   static propTypes = {
     loading: propTypes.bool,
-    items: propTypes.arrayOf(propTypes.object)
+    items: propTypes.arrayOf(propTypes.object),
+    onItemClickHandler: propTypes.func
   }
 
   getDummyItems = () => {
@@ -49,10 +61,11 @@ class ItemList extends PureComponent {
   }
 
   render() {
-    const { items, loading } = this.props;
+    const { items, loading, onItemClickHandler } = this.props;
 
     return (
       <div>
+        {loading || items.length + ' results'}
         <List
           className="search-list"
           itemLayout="vertical"
@@ -62,7 +75,7 @@ class ItemList extends PureComponent {
             <List.Item key={index} >
               {loading ?
                 <Skeleton loading={loading} active avatar /> :
-                <Item item={item} />
+                <Item item={item} onClickHandler={onItemClickHandler.bind(this, index, item)} />
               }
             </List.Item>
           )}

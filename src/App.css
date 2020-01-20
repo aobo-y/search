@@ -29,13 +29,17 @@
   padding-bottom: 40vh;
   padding-left: 6vw;
 
-  transition: all 0.75s ease;
+  transition: padding-left 0.75s ease, padding-bottom 0.65s ease 0.1s, height 0.75s ease;
 }
 
 .App-header__squeezed {
-  padding-bottom: 0;
+  padding-bottom: 0vh;
   height: 10vh;
   padding-left: 3vw;
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  z-index: 100;
 }
 
 .App-link {
@@ -60,6 +64,6 @@
 
 
 .App-content {
-  padding: 3vh 10vw;
+  padding: 2vh 10vw;
   max-width: 900px;
 }

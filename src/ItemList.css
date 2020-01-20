@@ -7,8 +7,13 @@
   padding-bottom: 26px;
 }
 
-.search-list .ant-list-vertical .ant-list-item-meta-title {
-  font-size: 18px;
+.search-list .ant-list-item-meta {
+  margin-bottom: 6px;
+}
+
+.search-list .ant-list-item-meta-title {
+  font-size: 20px;
+  margin-bottom: 2px;
 }
 
 .search-list .ant-list-item-meta-title > a {

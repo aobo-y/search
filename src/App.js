@@ -33,7 +33,7 @@ class App extends Component {
       loading: true
     });
 
-    api('/search', {
+    api.get('/search', {
       params: {
         q: val
       }
@@ -46,6 +46,20 @@ class App extends Component {
         items: resp.data,
         loading: false
       });
+    });
+  }
+
+  onItemClick = (index, item) => {
+    const { query, items } = this.state;
+
+    api.post('/clicks', {
+      clicks: [[query, item.url, index, items.length]],
+      items: null,
+      uid: null
+    }).then(resp => {
+      if (resp.status !== 200) {
+        throw Error(resp.data);
+      }
     });
   }
 
@@ -72,7 +86,11 @@ class App extends Component {
           {
             query && (
               <div className="App-content">
-                <ItemList loading={loading} items={items} />
+                <ItemList
+                  loading={loading}
+                  items={items}
+                  onItemClickHandler={this.onItemClick}
+                />
               </div>
             )
           }
