@@ -1,27 +1,56 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
+import React, { Component } from 'react';
+import axios from 'axios';
 import { Input } from 'antd';
 
 import ItemList from './ItemList';
+import config from './config';
+
+import logo from './logo.svg';
+
+const api = axios.create({
+  baseURL: config.API_HOST
+});
 
 const { Search } = Input;
 
 class App extends Component {
   state = {
-    query: ''
+    query: '',
+    loading: false,
+    items: null
   }
 
   onSearch = val => {
     val = val.trim();
-    if (val != '') {
-      this.setState({ query: val });
+    if (!val) {
+      return;
     }
+
+    this.setState({
+      query: val,
+      loading: true
+    });
+
+    api('/search', {
+      params: {
+        q: val
+      }
+    }).then(resp => {
+      if (resp.status !== 200) {
+        throw Error(resp.data);
+      }
+
+      this.setState({
+        items: resp.data,
+        loading: false
+      });
+    });
   }
 
   render() {
-    const { query } = this.state;
+    const { query, loading, items } = this.state;
 
     let headerCls = 'App-header';
     if (query) {
@@ -43,7 +72,7 @@ class App extends Component {
           {
             query && (
               <div className="App-content">
-                <ItemList loading />
+                <ItemList loading={loading} items={items} />
               </div>
             )
           }

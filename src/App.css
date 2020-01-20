@@ -1,7 +1,7 @@
 @import '~antd/dist/antd.css';
 
 .App {
-  text-align: center;
+  /* text-align: center; */
 }
 
 .App-logo {
@@ -27,7 +27,7 @@
   font-size: calc(10px + 2vmin);
   color: white;
   padding-bottom: 40vh;
-  padding-left: 5vw;
+  padding-left: 6vw;
 
   transition: all 0.75s ease;
 }
@@ -46,6 +46,7 @@
   width: 60vw;
   max-width: 600px;
   min-width: 200px;
+  margin-left: 1vw;
 }
 
 @keyframes App-logo-spin {
@@ -59,6 +60,6 @@
 
 
 .App-content {
-  padding: 3vh 5vw;
+  padding: 3vh 10vw;
   max-width: 900px;
 }

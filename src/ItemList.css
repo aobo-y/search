@@ -1,0 +1,26 @@
+
+.search-list {
+  color: #222
+}
+
+.search-list .ant-list-item {
+  padding-bottom: 26px;
+}
+
+.search-list .ant-list-vertical .ant-list-item-meta-title {
+  font-size: 18px;
+}
+
+.search-list .ant-list-item-meta-title > a {
+  color: #0691d7;
+}
+
+.search-list .ant-list-item-meta-title > a:hover {
+  color: #1daedc;
+}
+
+.search-list .ant-list-item-meta-description {
+  color: #5e6d8c;
+}
+
+
