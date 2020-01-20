@@ -8,13 +8,17 @@
     "@testing-library/user-event": "^7.1.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-scripts": "3.3.0"
+    "react-scripts": "3.3.0",
+    "antd": "^3.26.7",
+    "axios": "^0.19.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -32,10 +36,10 @@
     ]
   },
   "devDependencies": {
-    "antd": "^3.26.7",
-    "axios": "^0.19.1",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.8.0",
-    "eslint-plugin-react": "^7.18.0"
-  }
+    "eslint-plugin-react": "^7.18.0",
+    "gh-pages": "^2.2.0"
+  },
+  "homepage": "https://aobo-y.github.io/search/"
 }
