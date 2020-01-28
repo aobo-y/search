@@ -20,6 +20,8 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    this.searchRef = React.createRef();
+
     const {q} = qs.parse(window.location.search);
     this.state = {
       query: q,
@@ -36,7 +38,9 @@ class App extends Component {
     let {q} = qs.parse(window.location.search);
 
     if (q) {
-      this.setState({ query: q, loading: true });
+      this.setState({ query: q, loading: true }, () => {
+        this.searchRef.current.input.blur(); // only work with delay
+      });
 
       api.get('/search', {
         params: {
@@ -52,6 +56,9 @@ class App extends Component {
           loading: false
         });
       });
+
+    } else {
+      this.searchRef.current.focus();
     }
   }
 
@@ -104,6 +111,7 @@ class App extends Component {
               size="large"
               onSearch={this.onSearch}
               defaultValue={query}
+              ref={this.searchRef}
             />
           </div>
         </header>
