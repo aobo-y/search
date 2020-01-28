@@ -3,6 +3,7 @@ import './App.css';
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Input } from 'antd';
+import qs from 'query-string';
 
 import ItemList from './ItemList';
 import config from './config';
@@ -16,10 +17,42 @@ const api = axios.create({
 const { Search } = Input;
 
 class App extends Component {
-  state = {
-    query: '',
-    loading: false,
-    items: null
+  constructor(props) {
+    super(props);
+
+    const {q} = qs.parse(window.location.search);
+    this.state = {
+      query: q,
+      loading: Boolean(q),
+      items: null
+    };
+  }
+
+  componentDidMount() {
+    this.setQuery();
+  }
+
+  setQuery = () => {
+    let {q} = qs.parse(window.location.search);
+
+    if (q) {
+      this.setState({ query: q, loading: true });
+
+      api.get('/search', {
+        params: {
+          q
+        }
+      }).then(resp => {
+        if (resp.status !== 200) {
+          throw Error(resp.data);
+        }
+
+        this.setState({
+          items: resp.data,
+          loading: false
+        });
+      });
+    }
   }
 
   onSearch = val => {
@@ -28,25 +61,8 @@ class App extends Component {
       return;
     }
 
-    this.setState({
-      query: val,
-      loading: true
-    });
-
-    api.get('/search', {
-      params: {
-        q: val
-      }
-    }).then(resp => {
-      if (resp.status !== 200) {
-        throw Error(resp.data);
-      }
-
-      this.setState({
-        items: resp.data,
-        loading: false
-      });
-    });
+    window.history.pushState({}, null, '?' + qs.stringify({ q: val }));
+    this.setQuery();
   }
 
   onItemClick = (index, item) => {
@@ -75,12 +91,19 @@ class App extends Component {
     return (
       <div className="App">
         <header className={headerCls}>
-          <img src={logo} className="App-logo" alt="logo" />
+          {
+            query ?
+              (<a href="/">
+                <img src={logo} className="App-logo" alt="logo" />
+              </a>) :
+              <img src={logo} className="App-logo" alt="logo" />
+          }
           <div className="App-search">
             <Search
               placeholder="input search text"
               size="large"
               onSearch={this.onSearch}
+              defaultValue={query}
             />
           </div>
         </header>
