@@ -52,10 +52,11 @@ class App extends Component {
   onItemClick = (index, item) => {
     const { query, items } = this.state;
 
-    api.post('/clicks', {
-      clicks: [[query, item.url, index, items.length]],
-      items: null,
-      uid: null
+    api.post('/click', {
+      query,
+      idx: index,
+      total: items.length,
+      url: item.url,
     }).then(resp => {
       if (resp.status !== 200) {
         throw Error(resp.data);

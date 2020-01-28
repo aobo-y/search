@@ -41,5 +41,6 @@
     "eslint-plugin-react": "^7.18.0",
     "gh-pages": "^2.2.0"
   },
+  "proxy": "http://localhost:5000",
   "homepage": "https://aobo-y.github.io/search/"
 }
