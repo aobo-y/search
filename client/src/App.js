@@ -100,7 +100,7 @@ class App extends Component {
         <header className={headerCls}>
           {
             query ?
-              (<a href="/">
+              (<a href={window.location.pathname}>
                 <img src={logo} className="App-logo" alt="logo" />
               </a>) :
               <img src={logo} className="App-logo" alt="logo" />
